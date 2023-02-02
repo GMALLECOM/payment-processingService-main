@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: G-Mall API
+  version: 1.0.0
+servers:
+  - url: https://api.g-mall.com/v1
+paths:
+  /stores/{store_id}:
+    get:
+      summary: Retrieve information for a single store
+      parameters:
+        - in: path
+          name: store_id
+          description: The unique identifier for the store
+          schema:
+            type: integer
+      responses:
+        200:
+          description: Information for the specified store
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: The unique identifier for the store
+                  name:
+                    type: string
+                    description: The name of the store
+                  address:
+                    type: string
+                    description: The address of the store
+                  phone:
+                    type: string
+                    description: The phone number of the store
+        404:
+          description: Store not found
+  /v1/newOrders:
+    post:
+      summary: Create a new order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                customer_id:
+                  type: integer
+                  description: The unique identifier for the customer
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the product
+                      quantity:
+                        type: integer
+                        description: The quantity of the product
+                      price:
+                        type: number
+                        description: The price of the product
+              required:
+                - customer_id
+                - products
+      responses:
+        201:
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: integer
+                    description: The unique identifier for the order
+                  status:
+                    type: string
+                    description: The status of the order
+        400:
+          description: Invalid request
+  /customers/newOrder:
+    post:
+      summary: Create a new order for a customer
+      parameters:
+        - in: path
+          name: customer_id
+          description: The unique identifier for the customer
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                products:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        description: The unique identifier for the product
+                      quantity:
+                        type: integer
+                        description: The quantity of the product
+                      price:
+                        type: number
+                        description: The price of the product
+              required:
+                - products
+      responses:
+        201:
+          description: Order created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  order_id:
+                    type: integer
+                    description: The unique identifier for the order
+                  status:
+                    type: string
+                    description: The status of the order
+        400:
