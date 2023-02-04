@@ -1,0 +1,401 @@
+openapi: 3.0.0
+info:
+  title: Payment and Refund API
+  description: An API for processing payments and refunds
+  version: 1.0.0
+servers:
+  - url: https://payment.api.com/
+paths:
+  /api/prov/v1/payment:
+    post:
+      tags:
+        - Payment
+      summary: Creates a new payment
+      description: Creates a new payment for a customer
+      operationId: createPayment
+      parameters:
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+      responses:
+        201:
+          description: Payment created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        500:
+          description: Internal server error
+  /api/outlet/v2/payment/{payment_id}:
+    get:
+      tags:
+        - Payment
+      summary: Gets a payment by payment ID
+      description: Retrieves a payment based on its payment ID
+      operationId: getPayment
+      parameters:
+        - in: path
+          name: payment_id
+          description: ID of the payment
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Payment retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Payment not found
+        500:
+          description: Internal server error
+  /api/prov/v2/payment/{payment_id}:
+    put:
+      tags:
+        - Payment
+      summary: Updates a payment by payment ID
+      description: Updates a payment based on its payment ID
+      operationId: updatePayment
+      parameters:
+        - in: path
+          name: payment_id
+          description: ID of the payment
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Payment"
+      responses:
+        200:
+          description: Payment updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payment"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Payment not found
+        500:
+          description: Internal server error
+  /api/outlet/v1/payment/{payment_id}:
+    delete:
+      tags:
+        - Payment
+      summary: Deletes a payment by payment ID
+      description: Deletes a payment based on its payment ID
+      operationId: deletePayment
+      parameters:
+        - in: path
+          name: payment_id
+          description: ID of the payment
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Payment deleted successfully
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Payment not found
+        500:
+          description: Internal server error
+  /api/prov/v1/payment/history/{customer_id}:
+    get:
+      tags:
+        - Payment
+      summary: Gets a payment history for a customer
+      description: Retrieves the payment history for a customer based on the customer's ID
+      operationId: getPaymentHistory
+      parameters:
+        - in: path
+          name: customer_id
+          description: ID of the customer
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Payment history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Payment"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Payment history not found
+        500:
+          description: Internal server error
+  /api/outlet/v2/refund:
+    post:
+      tags:
+        - Refund
+      summary: Creates a new refund
+      description: Creates a new refund
+      operationId: createRefund
+      parameters:
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Refund"
+      responses:
+        201:
+          description: Refund created successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        500:
+          description: Internal server error
+  /api/prov/v1/refund/{refund_id}:
+    get:
+      tags:
+        - Refund
+      summary: Gets a refund by refund ID
+      description: Retrieves a refund based on its refund ID
+      operationId: getRefund
+      parameters:
+        - in: path
+          name: refund_id
+          description: ID of the refund
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Refund retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Refund not found
+        500:
+          description: Internal server error
+  paths:
+  /api/outlet/v2/refund/{refund_id}:
+    put:
+      tags:
+        - Refund
+      summary: Updates a refund
+      description: Updates a refund based on its refund ID
+      operationId: updateRefund
+      parameters:
+        - in: path
+          name: refund_id
+          description: ID of the refund
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Refund"
+      responses:
+        200:
+          description: Refund updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Refund not found
+        500:
+          description: Internal server error
+  paths:
+  /api/prov/v1/refund/{refund_id}:
+    delete:
+      tags:
+        - Refund
+      summary: Deletes a refund
+      description: Deletes a refund based on its refund ID
+      operationId: deleteRefund
+      Deprecated: true
+      parameters:
+        - in: path
+          name: refund_id
+          description: ID of the refund
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: Refund deleted successfully
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Refund not found
+        500:
+          description: Internal server error
+  paths:
+  /api/outlet/v2/refund/history/{customer_id}:
+    get:
+      tags:
+        - Refund
+      summary: Gets the refund history for a customer
+      description: Retrieves the refund history for a customer based on their customer ID
+      operationId: getRefundHistory
+      parameters:
+        - in: path
+          name: customer_id
+          description: ID of the customer
+          required: true
+          schema:
+            type: string
+        - in: header
+          name: Authorization
+          description: Access token for authentication
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: Refund history retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Refund"
+        400:
+          description: Bad request
+        401:
+          description: Unauthorized
+        404:
+          description: Refund history not found
+        500:
+          description: Internal server error
+
+components:
+  schemas:
+    Payment:
+      type: object
+      properties:
+        customer_id:
+          type: string
+          description: ID of the customer who made the payment
+        payment_amount:
+          type: number
+          description: Amount of the payment
+        payment_date:
+          type: string
+          format: date-time
+          description: Date of the payment
+    Refund:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the refund
+        payment_id:
+          type: string
+          description: ID of the payment
+        amount:
+          type: number
+          description: Amount of the refund
+        status:
+          type: string
+          description: Status of the refund
+        created_at:
+          type: string
+          format: date-time
+          description: Date and time when the refund was created
+        updated_at:
+          type: string
+          format: date-time
+          description: Date and time when the refund was last updated
