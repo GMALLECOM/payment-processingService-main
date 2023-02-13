@@ -3,9 +3,9 @@ info:
   title: G-Mall API
   version: 1.0.0
 servers:
-  - url: https://api.g-mall.com/v1
+  - url: 'https://api.g-mall.com/v1'
 paths:
-  /stores/{store_id}:
+  '/stores/{store_id}':
     get:
       summary: Retrieve information for a single store
       parameters:
@@ -15,7 +15,7 @@ paths:
           schema:
             type: integer
       responses:
-        200:
+        '200':
           description: Information for the specified store
           content:
             application/json:
@@ -34,7 +34,7 @@ paths:
                   phone:
                     type: string
                     description: The phone number of the store
-        404:
+        '404':
           description: Store not found
   /v1/newOrders:
     post:
@@ -66,7 +66,7 @@ paths:
                 - customer_id
                 - products
       responses:
-        201:
+        '201':
           description: Order created successfully
           content:
             application/json:
@@ -79,7 +79,7 @@ paths:
                   status:
                     type: string
                     description: The status of the order
-        400:
+        '400':
           description: Invalid request
   /customers/newOrder:
     post:
@@ -113,7 +113,7 @@ paths:
               required:
                 - products
       responses:
-        201:
+        '201':
           description: Order created successfully
           content:
             application/json:
@@ -126,4 +126,4 @@ paths:
                   status:
                     type: string
                     description: The status of the order
-        400:
+        '400': null
